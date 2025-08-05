@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Registro Automático</title>
+</head>
+<body onload="registrar()">
+  <h2>Registrando...</h2>
+  <script>
+    function registrar() {
+      const now = new Date();
+      const fecha = now.toISOString().split('T')[0];
+      const hora = now.toTimeString().split(' ')[0];
+      const numero = 1;
+
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(pos => {
+          const lat = pos.coords.latitude;
+          const lon = pos.coords.longitude;
+
+          const url = `https://script.google.com/macros/s/https://script.google.com/macros/s/AKfycbxp7dbV6KhrPyhX6oGxK0rV9o7JpURbTIzvEWecL_C_5SDq4-vHBquJpkRLK0JblDKzWw/exec
+/exec?fecha=${fecha}&hora=${hora}&numero=${numero}&lat=${lat}&lon=${lon}`;
+          fetch(url).then(() => {
+            document.body.innerHTML = "<h3>Datos registrados.</h3>";
+          });
+        });
+      } else {
+        alert("No se pudo obtener ubicación.");
+      }
+    }
+  </script>
+</body>
+</html>
